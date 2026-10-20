@@ -1,0 +1,7 @@
+/* ==============================================================================
+   PROJECT 2501 // MASTER STYLESHEET
+   Imports modular stylesheets: variables, CRT effect, and HUD styles.
+   ============================================================================== */
+@import url("variables.css");
+@import url("crt.css");
+@import url("hud.css");

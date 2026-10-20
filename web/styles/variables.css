@@ -1,0 +1,45 @@
+/* ==============================================================================
+   PROJECT 2501 // SYSTEM VARIABLES & DESIGN TOKENS
+   ============================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap');
+
+:root {
+  /* Color Palette */
+  --bg-primary: #030a05;
+  --bg-panel: #06140a;
+  --bg-panel-dark: #020804;
+  --bg-danger-panel: #140508;
+  --bg-warn-panel: #140b00;
+
+  --color-primary: #00ff66;
+  --color-primary-dim: #00cc52;
+  --color-primary-dark: #00aa44;
+  --color-amber: #ff9900;
+  --color-red: #ff003c;
+  --color-cyan: #00e5ff;
+  --color-white: #ffffff;
+
+  /* Typography */
+  --font-mono: 'Share Tech Mono', monospace;
+  --font-display: 'VT323', monospace;
+
+  /* Glow Effects */
+  --glow-green-sm: 0 0 8px rgba(0, 255, 102, 0.6);
+  --glow-green-lg: 0 0 8px rgba(0, 255, 102, 0.6), 0 0 20px rgba(0, 255, 102, 0.2);
+  --glow-amber: 0 0 8px rgba(255, 153, 0, 0.6);
+  --glow-red: 0 0 10px rgba(255, 0, 60, 0.8);
+
+  /* Border Glows */
+  --border-glow-green: 1px solid #00ff66;
+  --box-shadow-green: inset 0 0 10px rgba(0, 255, 102, 0.1), 0 0 10px rgba(0, 255, 102, 0.15);
+
+  --border-glow-amber: 1px solid #ff9900;
+  --box-shadow-amber: inset 0 0 10px rgba(255, 153, 0, 0.1), 0 0 10px rgba(255, 153, 0, 0.2);
+
+  --border-glow-red: 1px solid #ff003c;
+  --box-shadow-red: inset 0 0 10px rgba(255, 0, 60, 0.2), 0 0 15px rgba(255, 0, 60, 0.3);
+
+  /* CRT Overlay */
+  --crt-scanline-1: rgba(18, 16, 16, 0);
+  --crt-scanline-2: rgba(0, 0, 0, 0.4);
+}

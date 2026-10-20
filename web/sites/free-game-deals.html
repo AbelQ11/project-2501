@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PROJECT 2501 // CHANNEL: FREE-GAME-DEALS</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <link rel="stylesheet" href="/styles/style.css">
+  <script>
+    // Channel filter for telemetry stream
+    window.CHANNEL_FILTER = "free-game-deals";
+  </script>
+  <script type="module" src="/scripts/main.js"></script>
+</head>
+<body class="p-4 md:p-6 crt-flicker">
+  <div class="crt-overlay"></div>
+
+  <!-- Header Bar -->
+  <header class="border-glow bg-[#06140a] p-4 mb-4 gits-panel flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+    <div>
+      <div class="flex items-center gap-3">
+        <span class="bg-[#00ff66] text-[#030a05] px-2 py-0.5 text-xs font-bold tracking-wider">公安9課</span>
+        <h1 class="text-xl md:text-2xl font-bold tracking-widest glow-green">CHANNEL // FREE-GAME-DEALS</h1>
+      </div>
+      <p class="text-xs text-[#00cc52] mt-1 tracking-wider">
+        DOMAIN: <span class="text-white">free-game-deals.kiliotsu.eu</span> ──► LOG: <span class="text-[#ff9900]">/var/log/nginx/free-game-deals.kiliotsu.eu_access.log</span>
+      </p>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <nav class="flex items-center gap-2 text-xs">
+      <a href="/" class="nav-tab px-3 py-1.5 border border-[#00ff66]/40 text-[#00ff66]">ALL CHANNELS</a>
+      <a href="/sites/free-game-deals.html" class="nav-tab active px-3 py-1.5 border border-[#00ff66]">FREE-GAME-DEALS</a>
+      <a href="/sites/sibyl-system.html" class="nav-tab px-3 py-1.5 border border-[#00ff66]/40 text-[#00ff66]">SIBYL-SYSTEM</a>
+    </nav>
+
+    <!-- Telemetry Status -->
+    <div class="flex items-center gap-4 text-xs">
+      <div class="border border-[#00ff66]/40 px-3 py-1.5 bg-[#030a05]"><span class="text-[#00aa44]">SECTOR:</span> <span class="text-[#00ff66] font-bold ml-1">FGD-PRIMARY</span></div>
+      <div class="text-[#00ff66] text-sm font-bold font-mono" id="system-time">--:--:--</div>
+    </div>
+  </header>
+
+  <!-- Metric Badges Row -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+    <div class="border-glow bg-[#06140a] p-3 gits-panel">
+      <div class="text-[11px] text-[#00aa44] uppercase tracking-wider">[チャネル状態] CHANNEL STATUS</div>
+      <div class="flex items-baseline gap-2 mt-1"><span class="text-3xl font-bold text-white glow-green">ONLINE</span><span class="text-xs text-[#00ff66]">INGRESS ACTIVE</span></div>
+      <div class="text-[10px] text-[#00cc52]/60 mt-1 font-mono">TARGET: free-game-deals.kiliotsu.eu</div>
+    </div>
+    <div class="border-glow bg-[#06140a] p-3 gits-panel">
+      <div class="text-[11px] text-[#00aa44] uppercase tracking-wider">[24H アクセス数] INGRESS 24H</div>
+      <div class="flex items-baseline gap-2 mt-1"><span class="text-3xl font-bold text-white glow-green" id="ingress-24h">0</span><span class="text-xs text-[#00ff66]">HITS</span></div>
+      <div class="text-[10px] text-[#00cc52]/60 mt-1 font-mono" id="feed-rate">STREAM: 0.0 msg/s</div>
+    </div>
+    <div class="border-glow-red bg-[#140508] p-3 gits-panel">
+      <div class="text-[11px] text-[#ff003c] uppercase tracking-wider">[防御障壁] BREACH DETECTIONS</div>
+      <div class="flex items-baseline gap-2 mt-1"><span class="text-3xl font-bold text-[#ff003c] glow-red" id="breach-count">0</span><span class="text-xs text-[#ff003c]">ANOMALIES</span></div>
+      <div class="text-[10px] text-[#ff003c]/70 mt-1 font-mono">STATUS: SCANNER ACTIVE</div>
+    </div>
+  </div>
+
+  <!-- Active ICE Blacklist / Banned IPs -->
+  <div class="border-glow-red bg-[#0d0305] p-4 mb-4 gits-panel">
+    <div class="flex justify-between items-center border-b border-[#ff003c]/30 pb-2 mb-3">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-[#ff003c] animate-ping"></span>
+        <span class="font-bold text-sm tracking-wider glow-red">[攻性防壁] ACTIVE ICE BLACKLIST // CHANNEL-SPECIFIC DROP RULES</span>
+      </div>
+      <div class="text-xs font-mono text-[#ff003c]">
+        ACTIVE DROP RULES: <span id="banned-count" class="font-bold text-white bg-[#ff003c]/30 px-1.5 py-0.5 rounded">0</span>
+      </div>
+    </div>
+
+    <!-- Manual ICE Ban Input Bar -->
+    <div class="bg-[#140508]/80 border border-[#ff003c]/30 p-3 mb-3 flex flex-col md:flex-row items-stretch md:items-center gap-2">
+      <div class="flex items-center gap-2 text-[10px] text-[#ff003c] font-bold tracking-wider whitespace-nowrap">
+        <span class="bg-[#ff003c]/20 border border-[#ff003c]/60 px-2 py-0.5">MANUAL ICE</span>
+      </div>
+      <input id="ban-ip-input" type="text" placeholder="TARGET IP ADDRESS" 
+        class="flex-1 bg-[#030a05] border border-[#ff003c]/40 text-white text-xs font-mono px-3 py-1.5 placeholder:text-[#ff003c]/30 focus:border-[#ff003c] focus:outline-none focus:shadow-[0_0_10px_rgba(255,0,60,0.3)]" />
+      <input id="ban-reason-input" type="text" placeholder="REASON (OPTIONAL)" 
+        class="flex-1 bg-[#030a05] border border-[#ff003c]/40 text-white text-xs font-mono px-3 py-1.5 placeholder:text-[#ff003c]/30 focus:border-[#ff003c] focus:outline-none" />
+      <select id="ban-duration-select" 
+        class="bg-[#030a05] border border-[#ff003c]/40 text-[#ff003c] text-xs font-mono px-2 py-1.5 focus:border-[#ff003c] focus:outline-none">
+        <option value="15">15 MIN</option>
+        <option value="30">30 MIN</option>
+        <option value="60" selected>1 HOUR</option>
+        <option value="360">6 HOURS</option>
+        <option value="1440">24 HOURS</option>
+        <option value="10080">7 DAYS</option>
+        <option value="43200">30 DAYS</option>
+      </select>
+      <button id="ban-engage-btn" 
+        class="bg-[#ff003c]/20 hover:bg-[#ff003c]/40 border border-[#ff003c] text-[#ff003c] hover:text-white px-4 py-1.5 text-xs font-bold tracking-wider transition-all shadow-[0_0_12px_rgba(255,0,60,0.3)] hover:shadow-[0_0_20px_rgba(255,0,60,0.5)] whitespace-nowrap">
+        ▶ ENGAGE ICE BAN
+      </button>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-left font-mono text-xs">
+        <thead>
+          <tr class="border-b border-[#ff003c]/30 text-[#ff003c]/70 text-[10px] uppercase">
+            <th class="py-1 px-2">Attacker IP</th>
+            <th class="py-1 px-2">Target Channel</th>
+            <th class="py-1 px-2">Detection Reason</th>
+            <th class="py-1 px-2">Time (UTC)</th>
+            <th class="py-1 px-2 text-right">Defense Status</th>
+          </tr>
+        </thead>
+        <tbody id="banned-ips-body">
+          <tr>
+            <td colspan="5" class="py-3 text-center text-[#00ff66]/60 font-mono text-xs">
+              [✓] PERIMETER SECURE // NO ACTIVE ICE BANS
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Real-Time Telemetry Stream -->
+  <div class="border-glow bg-[#06140a] p-4 gits-panel">
+    <div class="flex justify-between items-center border-b border-[#00ff66]/20 pb-2 mb-2">
+      <div class="flex items-center gap-2">
+        <span class="text-xs font-bold tracking-wider glow-green">[情報ノ海] REAL-TIME INGRESS STREAM: FREE-GAME-DEALS</span>
+        <span class="text-[10px] text-[#00ff66]/60 font-mono">(Live Tail)</span>
+      </div>
+    </div>
+    <div class="font-mono text-xs space-y-1 max-h-96 overflow-y-hidden text-[#00ff66]/90" id="telemetry-log"></div>
+  </div>
+
+  <footer class="mt-4 text-center text-[10px] text-[#00cc52]/40 font-mono tracking-widest">
+    PUBLIC SECURITY SECTION 9 // PROTOCOL 2501 // TARGET: free-game-deals.kiliotsu.eu
+  </footer>
+</body>
+</html>
